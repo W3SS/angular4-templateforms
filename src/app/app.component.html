@@ -1,0 +1,105 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+            <form (ngSubmit)="onSubmit()" #form="ngForm">
+                <div id=" user-data " ngModelGroup="userData" #userData="ngModelGroup">
+                    <div class="form-group ">
+                        <label for="username ">Username</label>
+                        <input type="text " id="username " class="form-control " ngModel name="username" required>
+                    </div>
+                    <button (click)='suggestUserName()' class="btn btn-default " type="button">Suggest an Username</button>
+                    <div class="form-group ">
+                        <label for="email ">Mail</label>
+                        <input type="email " id="email " class="form-control " ngModel name="email" required email #email="ngModel">
+                    </div>
+                    <span *ngIf="!email.valid && email.touched " class="help-block">Please enter a valid email address</span>
+                </div>
+                <div class="form-group">
+                    <label for="secret">Secret Questions</label>
+                    <select id="secret" class="form-control" [ngModel]="defaultQuestion" name="secret">
+            <option value="pet">Your first Pet?</option>
+            <option value="teacher">Your first teacher?</option>
+          </select>
+                </div>
+                <div class="radio" *ngFor="let gender of genders">
+                    <label>
+                      <input type="radio" name="gender" ngModel [value]="gender" >{{gender}}
+                    </label>
+                </div>
+                <hr>
+                <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit </button>
+            </form>
+
+            <hr>
+            <h3>Your Data</h3>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>Username: {{users.user}} </p>
+                    <p>Email: {{users.email}}</p>
+                    <p>Secret Question: {{users.question}}</p>
+                    <p>Gender: {{users.gender}}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- TEMPLATE FORMS
+ngmodel added as a control on inputs in Template with name property
+ngsubmit click event on submit
+#form="ngForm" added to form element
+inside class :-
+  onSubmit(form: NgForm )
+  {
+    console.log(form.value)
+  }
+  you can also access data via viewchild like this in ts file
+
+  *************@ViewChild('form') signUpForm: NgForm***************
+
+  onSubmit(){
+    console.log(signUpForm)
+  }
+-->
+
+<!--VALIDATION
+Template checks is valid ng-dirty ng-touched ng-valid
+required
+email
+disabled if not valid
+-->
+
+<!--DEFAULT VALUES
+  You can also set deaut values for inputs by using property binding
+  [ngModel]="......."
+  set the property default value in the class
+-->
+
+<!-- Grouping values
+ in a div surrounding a group of inputs add ngModelGroup and assign it
+ a string name
+
+ You can also add a hash #theStrinName= "ngModelGroup" this would allow
+ you to access data in say an if statement
+-->
+
+<!--RADIO buttons
+<div class="radio" *ngFor="let gender of genders">
+  <label>
+        <input type="radio" name="gender" ngModel [value]="gender" >{{gender}}
+  </label>
+</div>
+
+you can add validation such as required
+
+-->
+
+<!--
+  setValue() you can set values for the form as defaults however you must specify all values as the form object
+
+  form.patchValue() you can specify individual values without it affecting the other inputs.
+-->
